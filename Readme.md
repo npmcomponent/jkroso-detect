@@ -17,13 +17,18 @@ then in your app:
 
 ```js
 var detect = require('detect')
+// optional variations
+detect.sync = require('detect/sync')
+detect.series = require('detect/series')
 ```
 
 ## API
 
-- [detect()](#detect)
+- [detect()](#detectarrayarraypredfunction)
 
-### detect()
+### detect(array:Array, pred:Function)
+
+  find the first item that passes the `pred` test
 
 ## Running the tests
 
