@@ -17,6 +17,7 @@ dist/detect.js: dist
 
 test:
 	@node_modules/.bin/mocha test/*.test.js \
+		--bail \
 		-R $(REPORTER)
 
 clean:
