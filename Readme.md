@@ -26,7 +26,7 @@ detect.series = require('detect/series')
 
 - [detect()](#detectarrayarraypredfunction)
 
-### detect(array:Array, pred:Function)
+### detect(array:Array, pred:Function, ctx:Any)
 
   find the first item that passes the `pred` test
 

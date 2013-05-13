@@ -6,10 +6,11 @@ var Promise = require('laissez-faire/full')
  * 
  * @param {Array} array
  * @param {Function} pred (item, callback)
+ * @param {Any} [ctx]
  * @return {Promise} for first passing value
  */
 
-module.exports = function(array, pred){
+module.exports = function(array, pred, ctx){
 	var i = 0
 	var pending = array.length
 	var len = pending
@@ -17,7 +18,7 @@ module.exports = function(array, pred){
 	if (!pending) fail(p)
 	else do block(array[i]); while(++i < len)
 	function block(item){
-		pred(item, function(yes){
+		pred.call(ctx, item, i, function(yes){
 			if (yes) p.fulfill(item), len = 0
 			else if (--pending < 1) fail(p)
 		})

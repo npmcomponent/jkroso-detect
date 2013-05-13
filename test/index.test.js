@@ -20,7 +20,7 @@ function dprom(val, method){
 	return p
 }
 
-describe('sync', function () {
+describe('detect', function () {
 	it('should return the first item that passes the test', function () {
 		detect([1,2,3], function(item){
 			return item == 2
@@ -36,7 +36,7 @@ describe('sync', function () {
 
 describe('async', function () {
 	it('should resolve to the first passing item', function (done) {
-		async([1,2,3], function(item, cb){
+		async([1,2,3], function(item, _, cb){
 			delay(cb, item == 2)
 		}).then(function(item){
 			item.should.equal(2)
@@ -50,7 +50,7 @@ describe('async', function () {
 	})
 
 	it('should reject if nothing passes', function (done) {
-		async([1,2,3], function(_, cb){ 
+		async([1,2,3], function(_, _, cb){ 
 			delay(cb, false) 
 		}).then(null, function(reason){
 			reason.should.be.an.instanceOf(Error)
@@ -87,14 +87,20 @@ describe('async', function () {
 
 describe('series', function () {
 	it('should return the first passing item by position', function (done) {
-		series([1,2,3], function(item, cb){
-			delay(cb, true)
+		series([1,2,3], function(item, i, cb){
+			delay(cb, item > 1)
 		}).then(function(item){
-			item.should.equal(1)
+			item.should.equal(2)
 		}).node(done)
 	})
 
-	it.skip('should implement an optional promise API', function (done) {
-		
+	it('should implement an optional promise API', function (done) {
+		series([1,2,3], function(item, i){
+			return promise(function(fulfill){
+				delay(fulfill, item > 1)
+			})
+		}).then(function(item){
+			item.should.equal(2)
+		}).node(done)
 	})
 })
