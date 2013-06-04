@@ -5,19 +5,14 @@ var should = require('chai').should()
   , series = require('../series')
   , async = require('../async')
 
-function delay(fn){
-	var args = Array.prototype.slice.call(arguments, 1)
-	setTimeout(function () {
-		fn.apply(null, args)
-	}, Math.round(Math.random() * 10))
-}
-
-function dprom(val, method){
-	var p = promise()
-	setTimeout(function () {
-		p[method || 'fulfill'](val)
-	}, Math.round(Math.random() * 10))
-	return p
+function delay(err, val){
+	var args = arguments
+	return promise(function(fulfill, reject){
+		setTimeout(function(){
+			if (args.length > 1) fulfill(val)
+			else reject(err)
+		}, Math.round(Math.random() * 10))
+	})
 }
 
 describe('detect', function () {
@@ -36,8 +31,8 @@ describe('detect', function () {
 
 describe('async', function () {
 	it('should resolve to the first passing item', function (done) {
-		async([1,2,3], function(item, _, cb){
-			delay(cb, item == 2)
+		async([1,2,3], function(item){
+			return delay(null, item == 2)
 		}).then(function(item){
 			item.should.equal(2)
 		}).node(done)
@@ -50,25 +45,17 @@ describe('async', function () {
 	})
 
 	it('should reject if nothing passes', function (done) {
-		async([1,2,3], function(_, _, cb){ 
-			delay(cb, false) 
+		async([1,2,3], function(){ 
+			return delay(null, false) 
 		}).then(null, function(reason){
 			reason.should.be.an.instanceOf(Error)
-		}).node(done)
-	})
-
-	it('should have an optional promise based API', function (done) {
-		async([1,2,3], function(item){
-			return dprom(item == 2)
-		}).then(function(val){
-			val.should.equal(2)
 		}).node(done)
 	})
 
 	it('should handle immediate resolution', function (done) {
 		async([1,2,3], function(item){
 			if (item == 2) return promise().resolve(true)
-			return dprom(false)
+			return delay(null, false)
 		}).then(function(val){
 			val.should.equal(2)
 		}).node(done)
@@ -76,8 +63,8 @@ describe('async', function () {
 
 	it('should propagate rejection', function (done) {
 		async([1,2,3], function(item){
-			if (item == 2) return dprom(2, 'reject')
-			return dprom(false)
+			if (item == 2) return delay(2)
+			return delay(null, false)
 		}).then(null, function(val){
 			val.should.equal(2)
 			done()
@@ -87,18 +74,8 @@ describe('async', function () {
 
 describe('series', function () {
 	it('should return the first passing item by position', function (done) {
-		series([1,2,3], function(item, i, cb){
-			delay(cb, item > 1)
-		}).then(function(item){
-			item.should.equal(2)
-		}).node(done)
-	})
-
-	it('should implement an optional promise API', function (done) {
 		series([1,2,3], function(item, i){
-			return promise(function(fulfill){
-				delay(fulfill, item > 1)
-			})
+			return delay(null, item > 1)
 		}).then(function(item){
 			item.should.equal(2)
 		}).node(done)

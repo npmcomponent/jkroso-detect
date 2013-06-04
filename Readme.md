@@ -17,9 +17,6 @@ then in your app:
 
 ```js
 var detect = require('detect')
-// optional variations
-detect.sync = require('detect/sync')
-detect.series = require('detect/series')
 ```
 
 ## API
