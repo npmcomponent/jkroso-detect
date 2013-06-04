@@ -6,11 +6,7 @@
     "laissez-faire": "~0.12.4",
     "when": "http://github.com/jkroso/when/tarball/1.0.0"
   },
-  "devDependencies": {
-    "mocha": "~1.9.0",
-    "chai": "~1.6.0",
-    "serve": "http://github.com/jkroso/serve/tarball/1.2.2"
-  },
+  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git://github.com/jkroso/detect.git"
