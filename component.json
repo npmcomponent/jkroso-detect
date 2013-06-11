@@ -2,7 +2,7 @@
   "name": "detect",
   "repo": "jkroso/detect",
   "description": "find the first item within an array that passes a predicate test. (async, sync, or series)",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "keywords": [
     "async",
     "find",
@@ -11,8 +11,8 @@
     "array"
   ],
   "dependencies": {
-    "jkroso/laissez-faire": "0.12.4",
-    "jkroso/when": "1.0.0"
+    "jkroso/laissez-faire": "0.12.5",
+    "jkroso/when": "2.0.0"
   },
   "scripts": [
     "index.js",
