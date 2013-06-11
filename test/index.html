@@ -2,6 +2,8 @@
 <html>
 <head>
 	<title>detect tests</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="../node_modules/mocha/mocha.css">
 </head>
 <body>
@@ -11,9 +13,9 @@
 
 		mocha.setup('bdd')
 
-		require('./index.test.js')
+		require('./index.test')
 
-		mocha.run(function () {
+		mocha.run(function(){
 			console.log('Done!')
 		})
 	</script>
