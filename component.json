@@ -1,8 +1,8 @@
 {
   "name": "detect",
   "repo": "jkroso/detect",
-  "description": "find the first item within an array that passes a predicate test. (async, sync, or series)",
-  "version": "0.3.1",
+  "description": "find the first item within an array that passes a predicate test",
+  "version": "0.3.2",
   "keywords": [
     "async",
     "find",
@@ -11,8 +11,8 @@
     "array"
   ],
   "dependencies": {
-    "jkroso/laissez-faire": "0.12.5",
-    "jkroso/when": "2.0.0"
+    "jkroso/when": "3.2.1",
+    "jkroso/resultify": "0.2.3"
   },
   "scripts": [
     "index.js",
@@ -21,8 +21,9 @@
   ],
   "license": "MIT",
   "development": {
-    "jkroso/serve": "1.2.4",
-    "visionmedia/mocha": "1.9.0",
-    "chaijs/chai": "1.6.1"
+    "jkroso/result": "0.3.0",
+    "jkroso/serve": "1.4.1",
+    "visionmedia/mocha": "1.11.0",
+    "chaijs/chai": "1.7.1"
   }
 }

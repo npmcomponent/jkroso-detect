@@ -1,6 +1,8 @@
 
-var Promise = require('laissez-faire/full')
+var decorate = require('resultify')
 var when = require('when/read')
+
+module.exports = decorate(parallelDetect)
 
 /**
  * find the first item that passes the `pred` test
@@ -8,24 +10,20 @@ var when = require('when/read')
  * @param {Array} array
  * @param {Function} pred (value, key) -> Boolean
  * @param {Any} [ctx]
- * @return {Promise} for first passing value
+ * @param {Function} cb
  */
 
-module.exports = function(array, pred, ctx){
+function parallelDetect(array, pred, ctx, cb){
+	if (cb === undefined) cb = ctx, ctx = null
 	var len = array.length
-	var i = 0
+	if (!len) return cb(new Error('can\'t detect within an empty array'))
 	var pending = len
-	var promise = new Promise
-	if (!len) fail()
-	else do block(array[i]); while(++i < len)
+	var i = 0
+	do block(array[i]); while(++i < len)
 	function block(item){
 		when(pred.call(ctx, item, i), function(yes){
-			if (yes) promise.write(item), i = 1
-			else if (--pending < 1) fail()
-		}, fail)
+			if (yes) return cb(null, item), len = 0
+			if (--pending === 0) cb(new Error('no items detected'))
+		}, cb)
 	}
-	function fail(e){
-		promise.error(e || new Error('none of ' + len + ' detected'))
-	}
-	return promise
 }

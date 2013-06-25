@@ -1,5 +1,5 @@
 
-var Promise = require('laissez-faire/full')
+var decorate = require('resultify')
 var when = require('when/read')
 
 /**
@@ -9,21 +9,22 @@ var when = require('when/read')
  * @param {Array} array
  * @param {Function} pred (value, key) -> Boolean
  * @param {Any} [context]
- * @return {Promise} for first passing value
+ * @param {Function} cb
  */
 
-module.exports = function(array, pred, ctx){
-	var i = 0
+module.exports = decorate(detectSeries) 
+module.exports.plain = detectSeries
+
+function detectSeries(array, pred, ctx, cb){
+	if (cb === undefined) cb = ctx, ctx = null
 	var pending = array.length
-	var promise = new Promise
+	var i = 0
 	function next(yes){
-		if (yes) promise.write(array[i - 1])
-		else if (i == pending) fail()
-		else when(pred.call(ctx, array[i], i++), next, fail)
-	}
-	function fail(e){
-		promise.error(e || new Error('none of ' + pending + ' detected'))
+		if (yes) return cb(null, array[i - 1])
+		if (i == pending) return cb(new Error('none of ' + pending + ' detected'))
+		try { yes = pred.call(ctx, array[i], i++) }
+		catch (e) { return cb(e) }
+		when(yes, next, cb)
 	}
 	next(false)
-	return promise
 }
