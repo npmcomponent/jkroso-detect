@@ -3,8 +3,7 @@ var decorate = require('resultify')
 var when = require('when/read')
 
 /**
- * find the first item in `array` by position that doesn't
- * fail the `pred` test
+ * find the first item in `array` by position that passes the `pred` test
  * 
  * @param {Array} array
  * @param {Function} pred (value, key) -> Boolean
