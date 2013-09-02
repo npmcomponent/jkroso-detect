@@ -1,10 +1,10 @@
 {
   "name": "detect",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "find the first item in an array that passes a predicate test",
   "dependencies": {
-    "when": "http://github.com/jkroso/when/tarball/3.2.1",
-    "resultify": "0.2.3"
+    "result": "0.3.4",
+    "lift-result": "0.1.0"
   },
   "devDependencies": {},
   "repository": {

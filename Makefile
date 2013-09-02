@@ -1,7 +1,7 @@
 REPORTER=dot
 
 serve: node_modules
-	@node_modules/serve/bin/serve
+	@node_modules/serve/bin/serve -Sloj
 
 test: node_modules
 	@node_modules/mocha/bin/_mocha test/*.test.js \
@@ -11,12 +11,10 @@ test: node_modules
 		--bail
 
 node_modules: component.json
-	@packin install --meta deps.json,component.json,package.json \
+	@packin install \
+		--meta component.json,package.json,deps.json \
 		--folder node_modules \
 		--executables \
 		--no-retrace
 
-clean:
-	rm -r node_modules
-
-.PHONY: clean serve test
+.PHONY: serve test

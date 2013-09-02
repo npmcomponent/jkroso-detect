@@ -1,20 +1,17 @@
 
-var decorate = require('resultify')
-var when = require('when/read')
+var lift = require('lift-result/cps')
+var read = require('result').read
 
 /**
  * find the first item in `array` by position that passes the `pred` test
- * 
+ *
  * @param {Array} array
  * @param {Function} pred (value, key) -> Boolean
  * @param {Any} [context]
- * @param {Function} cb
+ * @return {Result}
  */
 
-module.exports = decorate(detectSeries) 
-module.exports.plain = detectSeries
-
-function detectSeries(array, pred, ctx, cb){
+module.exports = lift(function(array, pred, ctx, cb){
 	if (cb === undefined) cb = ctx, ctx = null
 	var pending = array.length
 	var i = 0
@@ -23,7 +20,7 @@ function detectSeries(array, pred, ctx, cb){
 		if (i == pending) return cb(new Error('none of ' + pending + ' detected'))
 		try { yes = pred.call(ctx, array[i], i++) }
 		catch (e) { return cb(e) }
-		when(yes, next, cb)
+		read(yes, next, cb)
 	}
 	next(false)
-}
+})
