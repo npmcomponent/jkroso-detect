@@ -1,26 +1,19 @@
 {
   "name": "detect",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "find the first item in an array that passes a predicate test",
   "dependencies": {
-    "result": "0.3.4",
-    "lift-result": "0.1.0"
+    "lift-result": "~0.1.3",
+    "result": "~0.4.6"
   },
-  "devDependencies": {},
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/jkroso/detect.git"
+  "devDependencies": {
+    "serve": "jkroso/serve#1.5.3",
+    "mocha": "*",
+    "chai": "*"
   },
-  "bugs": {
-    "url": "https://github.com/jkroso/detect/issues"
-  },
-  "keywords": [
-    "async",
-    "find",
-    "detect",
-    "first",
-    "array"
-  ],
+  "repository": "git://github.com/jkroso/detect.git",
+  "bugs": "https://github.com/jkroso/detect/issues",
+  "keywords": ["async", "find", "detect", "first", "array"],
   "author": "Jake Rosoman",
   "license": "MIT"
 }
