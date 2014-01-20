@@ -1,9 +1,9 @@
 
+var series = require('../series')
+var async = require('../async')
+var Result = require('result')
 var chai = require('./chai')
-  , Result = require('result')
-  , series = require('../series')
-  , async = require('../async')
-  , detect = require('..')
+var detect = require('..')
 
 describe('detect', function(){
   it('should return the first item that passes the test', function(){
