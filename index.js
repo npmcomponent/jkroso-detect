@@ -9,7 +9,7 @@
  */
 
 module.exports = function(array, pred, ctx){
-	for (var i = 0, len = array.length; i < len; i++) {
-		if (pred.call(ctx, array[i])) return array[i]
-	}
+  for (var i = 0, len = array.length; i < len; i++) {
+    if (pred.call(ctx, array[i])) return array[i]
+  }
 }

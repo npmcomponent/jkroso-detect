@@ -12,15 +12,15 @@ var read = require('result').read
  */
 
 module.exports = lift(function(array, pred, ctx, cb){
-	if (cb === undefined) cb = ctx, ctx = null
-	var pending = array.length
-	var i = 0
-	function next(yes){
-		if (yes) return cb(null, array[i - 1])
-		if (i == pending) return cb(new Error('none of ' + pending + ' detected'))
-		try { yes = pred.call(ctx, array[i], i++) }
-		catch (e) { return cb(e) }
-		read(yes, next, cb)
-	}
-	next(false)
+  if (cb === undefined) cb = ctx, ctx = null
+  var pending = array.length
+  var i = 0
+  function next(yes){
+    if (yes) return cb(null, array[i - 1])
+    if (i == pending) return cb(new Error('none of ' + pending + ' detected'))
+    try { yes = pred.call(ctx, array[i], i++) }
+    catch (e) { return cb(e) }
+    read(yes, next, cb)
+  }
+  next(false)
 })
