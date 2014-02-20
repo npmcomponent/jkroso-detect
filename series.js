@@ -1,6 +1,6 @@
 
-var lift = require('lift-result/cps')
-var read = require('result').read
+// commented out by npm-component: var lift = require('lift-result/cps')
+var read = require('jkroso-result').read
 
 /**
  * find the first item in `array` by position that passes the `pred` test
